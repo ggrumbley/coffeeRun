@@ -39,6 +39,18 @@
               Grande
             </label>
           </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="size" value="venti">
+              Venti
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="size" value="trenta">
+              Trenta
+            </label>
+          </div>
           <div class="form-group">
             <label for="flavorShot">Flavor Shot</label>
             <select name="flavor" id="flavorShot" class="form-control">
@@ -49,22 +61,30 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="strengthLevel">Caffeine Rating</label>
-            <input name="strength" type="range" value="30" id="strengthLevel">
+            <label class="label label-default" for="strengthLevel">Caffeine Rating:</label><output class="label label-info" name="strength" id="strengthLevelOutput">30</output>
+            <input name="strength" type="range" value="30" id="strengthLevel" min="1" max="100" oninput="strengthLevelOutput.value = strengthLevel.value">
+
+
           </div>
           <button type="submit" class="btn btn-default">Submit</button>
           <button type="reset" class="btn btn-default">Reset</button>
         </form>
       </div>
     </div>
+
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h4>Pending Orders:</h4>
+        <div data-coffee-order="checklist"></div>
+      </div>
+    </div>
   </section>
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js" charset="utf-8"></script>
     <script src="scripts/datastore.js" charset="utf-8"></script>
     <script src="scripts/truck.js" charset="utf-8"></script>
-
+    <script src="scripts/formhandler.js" charset="utf-8"></script>
     <script src="scripts/checklist.js" charset="utf-8"></script>
-    <script src="scripts/forms.js" charset="utf-8"></script>
     <script src="scripts/remotedatastore.js" charset="utf-8"></script>
     <script src="scripts/validation.js" charset="utf-8"></script>
     <script src="scripts/main.js" charset="utf-8"></script>
