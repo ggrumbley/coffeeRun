@@ -40,9 +40,25 @@
   }
 
   function Row(coffeeOrder) {
+    var shotColor = '';
+
+    switch (coffeeOrder.flavor) {
+      case 'caramel':
+        shotColor = 'caramel';
+        break;
+      case 'almond':
+        shotColor = 'almond';
+        break;
+      case 'mocha':
+        shotColor = 'mocha';
+        break;
+      default:
+        '';
+    }
+
     var $div = $('<div></div>', {
       'data-coffee-order': 'checkbox',
-      'class': 'checkbox'
+      'class': 'checkbox ' + shotColor
     });
 
     var $label = $('<label></label>');
