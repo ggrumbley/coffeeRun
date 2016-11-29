@@ -7,3 +7,7 @@
 .mocha {
   background-color: #6F372D;
 }
+
+form :focus:required:invalid {
+  border-color: #a94442;
+}
