@@ -19,7 +19,10 @@
     this.$element.on('click', 'input', function (event) {
       var email = event.target.value;
       this.removeRow(email);
-      fn(email);
+      fn(email)
+      .then(function () {
+        this.removeRow(email);
+      }.bind(this));
     }.bind(this));
   };
 
@@ -58,7 +61,7 @@
 
     var $div = $('<div></div>', {
       'data-coffee-order': 'checkbox',
-      'class': 'checkbox ' + shotColor
+      'class': 'checkbox btn btn-default btn-lg btn-block ' + shotColor
     });
 
     var $label = $('<label></label>');
