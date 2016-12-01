@@ -4,14 +4,14 @@
   var CHECKLIST_SELECTOR = '[data-coffee-order="checklist"]'
   var SERVER_URL = 'http://coffeerun-v2-rest-api.herokuapp.com/api/coffeeorders';
   var App = window.App;
-  var Truck = App.Truck;
+  var Cart = App.Cart;
   var DataStore = App.DataStore;
   var RemoteDataStore = App.RemoteDataStore;
   var FormHandler = App.FormHandler;
   var Validation = App.Validation;
   var CheckList = App.CheckList;
   var remoteDS = new RemoteDataStore(SERVER_URL);
-  var myTruck = new Truck('GrumbleTruck', remoteDS);
+  var myCart = new Cart('Grumblebucks Cart #1', remoteDS);
 
   $.get(SERVER_URL)
     .success(function() {
@@ -19,23 +19,23 @@
     })
     .fail(function () {
       console.log('Offline Mode');
-      myTruck = new Truck('TrainingTruck', new DataStore());
+      myCart = new Cart('Training Cart', new DataStore());
     });
-  window.myTruck = myTruck;
 
+  window.myCart = myCart;
 
   var checkList = new CheckList(CHECKLIST_SELECTOR);
-  checkList.addClickHandler(myTruck.deliverOrder.bind(myTruck));
+  checkList.addClickHandler(myCart.deliverOrder.bind(myCart));
 
   var formHandler = new FormHandler(FORM_SELECTOR);
   formHandler.addSubmitHandler(function (data) {
-    return myTruck.createOrder.call(myTruck, data)
+    return myCart.createOrder.call(myCart, data)
       .then(function () {
         checkList.addRow.call(checkList, data);
       });
   });
 
   formHandler.addInputHandler(Validation.isValidEmail);
-  myTruck.printOrders(checkList.addRow.bind(checkList));
+  myCart.printOrders(checkList.addRow.bind(checkList));
 
 })(window);

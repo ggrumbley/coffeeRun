@@ -2,27 +2,27 @@
   'use strict';
   var App = window.App || {};
 
-  function Truck(truckId, db) {
-    this.truckId = truckId;
+  function Cart(cartId, db) {
+    this.cartId = cartId;
     this.db = db;
   }
 
-  Truck.prototype.createOrder = function (order) {
+  Cart.prototype.createOrder = function (order) {
     console.log('Adding order for ' + order.emailAddress);
     return this.db.add(order.emailAddress, order);
   }
 
-  Truck.prototype.deliverOrder = function (customerId) {
+  Cart.prototype.deliverOrder = function (customerId) {
     console.log('Delivering order for ' + customerId);
     return this.db.remove(customerId);
   }
 
-  Truck.prototype.printOrders = function (printFn) {
+  Cart.prototype.printOrders = function (printFn) {
     return this.db.getAll()
       .then(function (orders) {
         var customerIdArray = Object.keys(orders);
 
-        console.log('Truck #' + this.truckId + ' has pending orders:');
+        console.log(this.cartId + ' has pending orders:');
         customerIdArray.forEach(function (id) {
           console.log(orders[id]);
           if (printFn) {
@@ -32,6 +32,6 @@
       }.bind(this));
   };
 
-  App.Truck = Truck;
+  App.Cart = Cart;
   window.App = App;
 })(window);

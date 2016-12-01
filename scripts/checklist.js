@@ -15,16 +15,7 @@
     }
   }
 
-  CheckList.prototype.addClickHandler = function (fn) {
-    this.$element.on('click', 'input', function (event) {
-      var email = event.target.value;
-      this.removeRow(email);
-      fn(email)
-      .then(function () {
-        this.removeRow(email);
-      }.bind(this));
-    }.bind(this));
-  };
+
 
   CheckList.prototype.addRow = function (coffeeOrder) {
     // Remove duplicate order (one order per person)
@@ -42,8 +33,24 @@
       .remove();
   }
 
+  CheckList.prototype.addClickHandler = function (fn) {
+    this.$element.on('click', 'input', function (event) {
+      var email = event.target.value;
+      fn(event.target.value)
+      .then(function () {
+        this.removeRow(event.target.value);
+      }.bind(this));
+    }.bind(this));
+  };
+
+  String.prototype.cap = function () {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+  }
+
   function Row(coffeeOrder) {
     var shotColor = '';
+    var stVal = coffeeOrder.strength;
+    var strength = '';
 
     switch (coffeeOrder.flavor) {
       case 'caramel':
@@ -58,8 +65,19 @@
       default:
         '';
     }
+    if (stVal < 10) {
+      strength = 'Decaf';
+    } else if (stVal > 30 && stVal <= 50) {
+      strength = 'Strong';
+    } else if (stVal > 50 && stVal <= 75) {
+      strength = 'Super Strong';
+    } else if (stVal > 75) {
+      strength = 'Epic';
+    } else {
+      strength = '';
+    }
 
-    var $div = $('<div></div>', {
+    var $div = $('<div/>', {
       'data-coffee-order': 'checkbox',
       'class': 'checkbox btn btn-default btn-lg btn-block ' + shotColor
     });
@@ -71,13 +89,13 @@
       value: coffeeOrder.emailAddress
     });
 
-    var description = coffeeOrder.size + ' ';
+
+    var description = strength + ' ' + coffeeOrder.size.cap() + ' ';
     if (coffeeOrder.flavor) {
-      description += coffeeOrder.flavor + ' ';
+      description += coffeeOrder.flavor.cap() + ' ';
     }
-    description += coffeeOrder.coffee + ', ';
+    description += coffeeOrder.coffee.cap() + ', ';
     description += ' (' + coffeeOrder.emailAddress + ')';
-    description += ' [' + coffeeOrder.strength + 'x]';
 
     $label.append($checkbox);
     $label.append(description);
